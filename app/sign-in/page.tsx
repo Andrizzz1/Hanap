@@ -23,7 +23,7 @@ export default function signIn() {
                         </div>
 
                     </div>
-                    <CardFooter className="bg-white flex justify-center gap-1">
+                    <CardFooter className="bg-white flex justify-center gap-1 flex-col">
                         <Button type="submit" size={"sm"} className="py-1 px-4">Log In</Button>
                         <p className="text-gray-500 text-xs">doesn't have an account ? <Link className="text-[#FFCD54] hover:underline" href={"/sign-up"}>Sign in</Link></p>
                     </CardFooter>

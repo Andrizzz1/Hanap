@@ -84,14 +84,14 @@ export default function SignUp() {
                             <Input id="password" 
                             type="password" 
                             value={password}
-                            maxLength={8}
+                            minLength={8}
                             onChange={(e)=>setPassword(e.target.value)}
                             placeholder="raimelS" required></Input>
                         </div>
 
                     </div>
                     <CardFooter className="bg-white flex justify-center gap-1 flex-col">
-                        <Button type="submit" size={"sm"} className="py-1 px-4" disabled={loading}>Sign Up</Button>
+                        <Button type="submit" size={"sm"} className="py-1 px-4" disabled={loading}>{loading?"Creating acount...": "Create account"}</Button>
                         <p className="text-gray-500 text-xs">Already have an account ? <Link className="text-[#FFCD54] hover:underline" href={"/sign-in"}>Sign in</Link></p>
                     </CardFooter>
                 </form>

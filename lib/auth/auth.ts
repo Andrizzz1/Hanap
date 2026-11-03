@@ -1,5 +1,6 @@
 import { betterAuth } from "better-auth";
 import { headers } from "next/headers";
+import { redirect } from "next/navigation";
 import { Pool } from "pg";
 //npx auth@latest migrate --config ./lib/auth/auth.ts this creates the table for pgAdmin
 export const auth = betterAuth({
@@ -31,4 +32,13 @@ export async function getSession(){
   })
 
   return result;
+}
+export async function signOut(){
+  const result = await auth.api.signOut({
+    headers:await headers()
+  })
+
+  if (result.success){
+    redirect("/sign-in")
+  }
 }

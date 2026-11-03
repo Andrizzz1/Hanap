@@ -51,10 +51,12 @@ export default function SignUp() {
                 <form onSubmit={handleSubmit}>
                     {/*Full name */}
                     <div>
+                    {error?<p className="bg-red-300 text-red-500 rounded-sm py-1">{error}</p>:null}
+                    
                         <div className="grid grid-cols-2 gap-1">
 
                             <div>
-                                <Label htmlFor="fname">First Name</Label>
+                                <Label className="mb-1 ml-0.5" htmlFor="fname">First Name</Label>
                                 <Input id="fname" 
                                        type="text"
                                         value={firstname}
@@ -62,7 +64,7 @@ export default function SignUp() {
                                         placeholder="raimel" required></Input>
                             </div>
                             <div>
-                                <Label htmlFor="lname">Last Name</Label>
+                                <Label className="mb-1 ml-0.5"  htmlFor="lname">Last Name</Label>
                                 <Input id="lname" 
                                         type="text" 
                                          value={lastname}
@@ -71,7 +73,7 @@ export default function SignUp() {
                             </div>
                         </div>
                         <div className="mt-5">
-                            <Label htmlFor="email">Email</Label>
+                            <Label htmlFor="email" className="mb-1 ml-0.5">Email</Label>
                             <Input id="email" 
                                     type="email" 
                                     value={email}
@@ -79,8 +81,7 @@ export default function SignUp() {
                                     placeholder="mel@gmail.com" required></Input>
                         </div>
                         <div className="mt-5">
-                            {error? <p className="bg-red-500 text-xs text-white rounded p-0.5 mb-1">{error}</p>:null}
-                            <Label htmlFor="password">Password</Label>
+                            <Label htmlFor="password" className="mb-1 ml-0.5">Password</Label>
                             <Input id="password" 
                             type="password" 
                             value={password}

@@ -43,18 +43,19 @@ export default function SignIn(){
                     <CardDescription>Log-In and start tracking your job applications</CardDescription>
                 </CardHeader>
                 <form onSubmit={handleSubmit}>
-                    <div>
-                        <div className="mt-5">
-                            <Label htmlFor="email">Email</Label>
-                            <Input value={email} onChange={(e)=>setEmail(e.target.value)} id="email" type="email" placeholder="mel@gmail.com" required></Input>
-                        </div>
-                        <div className="mt-5">
-                            <Label htmlFor="password">Password</Label>
-                            <Input value={password} onChange={(e)=>setPassword(e.target.value)} id="password" type="password" placeholder="raimelS" required></Input>
-                        </div>
-
+                    {error?<p className="bg-red-300 text-red-500 rounded-sm py-1">{error}</p>:null}
+                 
+                    <div className="mt-5">
+                        <Label className="mb-1 ml-0.5" htmlFor="email">Email</Label>
+                        <Input value={email} onChange={(e)=>setEmail(e.target.value)} id="email" type="email" placeholder="mel@gmail.com" required></Input>
                     </div>
-                    <CardFooter className="bg-white flex justify-center gap-1 flex-col">
+                    <div className="mt-5">
+                        <Label className="mb-1 ml-0.5" htmlFor="password">Password</Label>
+                        <Input value={password} onChange={(e)=>setPassword(e.target.value)} id="password" type="password" placeholder="raimelS" required></Input>
+                    </div>
+
+           
+                    <CardFooter className="bg-white flex justify-center gap-1 flex-col border-0">
                         <Button type="submit" size={"sm"} className="py-1 px-4">{loading?"Logging In":"Log In"}</Button>
                         <p className="text-gray-500 text-xs">doesn't have an account ? <Link className="text-[#FFCD54] hover:underline" href={"/sign-up"}>Sign in</Link></p>
                     </CardFooter>

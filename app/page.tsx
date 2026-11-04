@@ -1,24 +1,25 @@
-import Image from "next/image";
 import { CircleCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {ArrowRight} from "lucide-react";
-
 import Link from "next/link";
-export default function Home() {
+
+import { getSession } from "@/lib/auth/auth";
+export default async function Home() {
+  const session = await getSession()
   return (
     <div>
       <main>
         {/*Hero Section */}
         <section className="flex flex-col items-center justify-center px-10 py-40 w-screen md:w-3xl mx-auto text-center gap-3">
           <h1 className="text-6xl font-bold">Your Job <span className="text-[#FFCD54]">Search</span> ,  <span className="text-[#FFCD54]">Organized</span>  in One Place</h1>
-          <p className="text-gray-500">Discover the right opportunities, track your applications, and take control of your career journey. hanap helps you stay organized and move closer to your dream job.</p>
-          <Link href="/sign-up">
-            <Button size="lg" className="text-lg px-8 py-5">
-              Start for Free
-              <ArrowRight className="ml-2" />
+          <p className="text-gray-500">Discover the right opportunities, track your applications, and take control of your career journey. hanap helps you stay organized and move closer to your dream job.</p>     
+            <Button  size="lg" className="text-lg  px-8 py-5">
+              <Link className="flex items-center" href={session?.user ? "/dashboard" : "/sign-up"}>
+                {session?.user ? "Go to Dashboard" : "Start for Free"}
+                <ArrowRight className="ml-2" />
+              </Link>
             </Button>
-          </Link>
-          <div className="flex gap-4 ">
+          <div className="flex gap-4">
             <p className="flex items-center gap-1 "> 
               <CircleCheck size={15} className="text-indigo-600"/> Track applications</p>
             <p className="flex items-center gap-1">  

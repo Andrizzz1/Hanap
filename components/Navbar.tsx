@@ -15,8 +15,11 @@ import { useSession } from "@/lib/auth/auth.client";
 import { signOut } from "@/lib/auth/auth.client";
 import { Avatar } from "./ui/avatar";
 import { AvatarFallback } from "./ui/avatar";
+import ChangeProfile from "./ChangeProfile-Popup";
+import { useState } from "react";
 export default function Navbar() {
     const {data: session}=useSession()
+    const [changeProfile,setChangeProfile] = useState(false)
     const router = useRouter()
     return (
       <>
@@ -50,7 +53,9 @@ export default function Navbar() {
                                     <p>{session.user.email}</p>
                                 </div>
                             </DropdownMenuLabel>
-                            <DropdownMenuItem onClick={async ()=> {await signOut();
+                            <DropdownMenuItem onClick={()=>setChangeProfile(true)}>Change profile</DropdownMenuItem>
+                            <DropdownMenuItem
+                                onClick={async ()=> {await signOut();
                                                   router.push("/sign-in")}}>Log Out</DropdownMenuItem>
                     
                         </DropdownMenuGroup>
@@ -71,6 +76,7 @@ export default function Navbar() {
             )}
           </div>
         </div>
+        {changeProfile?(<ChangeProfile onClose={()=> setChangeProfile(false)}/>):null}
       </>
     );
 }

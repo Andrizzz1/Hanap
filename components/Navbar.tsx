@@ -17,6 +17,8 @@ import { Avatar } from "./ui/avatar";
 import { AvatarFallback } from "./ui/avatar";
 import ChangeProfile from "./ChangeProfile-Popup";
 import { useState } from "react";
+import { Mascot } from "page-mascot";
+
 export default function Navbar() {
     const {data: session}=useSession()
     const [changeProfile,setChangeProfile] = useState(false)
@@ -38,9 +40,19 @@ export default function Navbar() {
                     <DropdownMenuTrigger>
                         <Button variant="ghost">
                             <Avatar>
+                              {session.user.image?<AvatarFallback>
+                                <Mascot
+                                  directions={`/mascots/${session.user.image}-directions.webp`}
+                                  reactions={`/mascots/${session.user.image}-reactions.webp`}
+                                  size={120}
+                                  label={session.user.image}
+                                />
+                              </AvatarFallback>:
                                 <AvatarFallback className="bg-black text-white">
                                     {session.user.fname[0].toUpperCase()}
                                 </AvatarFallback>
+                
+                              }
                             </Avatar>
                         </Button>
                     </DropdownMenuTrigger>

@@ -8,7 +8,9 @@ import { X } from "lucide-react";
 import MascotWidget from "@/components/MascotWidget";
 type ChangeProfileProps = {
   onClose: () => void;
+
 };
+
 export default function ChangeProfile({onClose}:ChangeProfileProps){
     const{ data:session} = useSession()
 
@@ -28,7 +30,7 @@ export default function ChangeProfile({onClose}:ChangeProfileProps){
                 <hr className="my-1.5"/>
 
                 <p className="font-bold">Select Profiles:</p>
-                <MascotWidget />
+                <MascotWidget  />
                 <div  onClick={onClose} className="absolute top-0 right-1.5 p-3 rounded-full hover:bg-black/10">
                     <X />
                 </div>

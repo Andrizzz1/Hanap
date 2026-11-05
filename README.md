@@ -13,7 +13,10 @@ Save/book Mark Jobs
 
 github repo used for(profiles):
 https://koboyo.com/page-mascot
+
 ```bash
+npm i 
+
 npm run dev
 ```
 

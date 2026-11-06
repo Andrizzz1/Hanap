@@ -29,13 +29,9 @@ export default function Navbar() {
           <Link href="/">
             <img className="w-25" src="/logo.png" alt="logo" />
           </Link>
-          <div className="flex gap-4">
+          <div>
             {session ? (
               <>
-                <Link href="/dashboard">
-                  <Button variant="ghost">Dashboard</Button>
-                </Link>
-
                 <DropdownMenu>
                     <DropdownMenuTrigger>
                         <Button variant="ghost">
@@ -44,7 +40,7 @@ export default function Navbar() {
                                 <Mascot
                                   directions={`/mascots/${session.user.image}-directions.webp`}
                                   reactions={`/mascots/${session.user.image}-reactions.webp`}
-                                  size={120}
+                                  size={30}
                                   label={session.user.image}
                                 />
                               </AvatarFallback>:

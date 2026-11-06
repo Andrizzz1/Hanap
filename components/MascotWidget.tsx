@@ -2,8 +2,7 @@
 "use client";
 
 import { Mascot } from "page-mascot";
-import { useState } from "react";
-import { useSession } from "@/lib/auth/auth.client";
+import {authClient, useSession } from "@/lib/auth/auth.client";
 
 const mascots=[
   {name:'fox'},
@@ -15,20 +14,29 @@ const mascots=[
 ]
 
 export default function MascotWidget() {
-  const [profile,setProfile] = useState()
+  const {data: session}=useSession()
   
-    function handleChangeProfile(){
-      const {data: session}=useSession()
+    async function handleChangeProfile(mascotName: string){
+    if (!session) return;
+
       try{
-        session.user.image == profile
+        const {error} = await authClient.updateUser({
+          image:mascotName,
+        })
+
+        if (error) {
+          console.error(error.message);
+          return;
+        }
       }catch(err){
         console.log(err)
       }
     }
   return (
-    <div className="flex flex-wrap">
-      {mascots.map((mascot,i)=>(
-        <div key={i} onMouseEnter={()=>{setProfile(mascot.name)}} onClick={handleChangeProfile}>
+    <div className="flex flex-wrap items-center">
+
+      {mascots.map((mascot)=>(
+        <div key={mascot.name} onClick={()=>handleChangeProfile(mascot.name)}>
           <Mascot
             directions={`/mascots/${mascot.name}-directions.webp`}
             reactions={`/mascots/${mascot.name}-reactions.webp`}
@@ -37,7 +45,6 @@ export default function MascotWidget() {
           />
         </div>
       ))}  
-      <p>{profile}</p>
     </div>
 
   );

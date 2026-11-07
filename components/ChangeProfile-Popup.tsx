@@ -4,9 +4,8 @@
 import { Avatar } from "./ui/avatar";
 import { AvatarFallback } from "./ui/avatar";
 import { useSession, authClient } from "@/lib/auth/auth.client";
-import { X } from "lucide-react";
+import { X , ArrowUpFromLine, CircleFadingArrowUpIcon} from "lucide-react";
 import MascotWidget from "@/components/MascotWidget";
-import { CircleFadingArrowUpIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useRef, useState } from "react";
 type ChangeProfileProps = {
@@ -14,41 +13,42 @@ type ChangeProfileProps = {
 };
 
 export default function ChangeProfile({onClose}:ChangeProfileProps){
-    const{ data:session} = useSession()
+    const{ data:session, refetch} = useSession()
      const fileInputRef = useRef<HTMLInputElement>(null);
      const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
     async function uploadProfileImage() {
-        if (!selectedFile) return;
+    if (!selectedFile) return;
 
-        try {
-            const formData = new FormData();
-            formData.append("image", selectedFile);
+    try {
+        const formData = new FormData();
+        formData.append("image", selectedFile);
 
-            const response = await fetch("/api/upload", {
-            method: "POST",
-            body: formData,
-            });
+        const response = await fetch("/api/upload", {
+        method: "POST",
+        body: formData,
+        });
 
-            const result = await response.json();
+        const result = await response.json();
 
-            if (!response.ok) {
-            throw new Error(result.error || "Upload failed");
-            }
-
-            const { error } = await authClient.updateUser({
-            image: result.url,
-            });
-
-            if (error) throw new Error(error.message);
-        } catch (error) {
-            console.error(error);
+        if (!response.ok) {
+        throw new Error(result.error || "Upload failed");
         }
-        }
+
+       await refetch({
+        query: { disableCookieCache: true },
+        });
+
+        onClose();
+        
+    } catch (error) {
+        console.error(error);
+    }
+    }
 
     return <div className="min-h-screen min-w-screen  absolute bg-black/25">
         <div className="flex justify-center items-center min-h-screen">
-            <div className="relative bg-white shadow-2xl w-2xl p-2.5 rounded-2xl">
+            <div className="relative bg-white shadow-2xl w-2xl p-2.5 rounded-2xl ">
                 <div className="flex gap-1 text-xs text-gray-500">
                     <Avatar>
                         <AvatarFallback>{session?.user.fname[0]}</AvatarFallback>
@@ -75,15 +75,23 @@ export default function ChangeProfile({onClose}:ChangeProfileProps){
                     }
                     }}
                 />
-                <Button onClick={uploadProfileImage} variant="outline" size="lg">
-                    <CircleFadingArrowUpIcon />
-                    <p>Upload Profile</p>
-                </Button>
+
+                <div className="flex gap-1">
+                    <Button onClick={() => fileInputRef.current?.click()} variant="outline" size="lg">
+                        <CircleFadingArrowUpIcon />
+                        <p>Upload Profile</p>
+                    </Button>
+                    <Button type="button" disabled={!selectedFile} onClick={uploadProfileImage} variant="outline" size="lg">
+                        <ArrowUpFromLine />
+                        <p>Save Profile img</p>
+                    </Button>
+                </div>
                 </div>
 
+        
                 <MascotWidget  />
-                <div  onClick={onClose} className="absolute top-0 right-1.5 p-3 rounded-full hover:bg-black/10">
-                    <X />
+                <div  onClick={onClose} className="absolute top-0 right-1.5 p-3 my-1 rounded-full hover:bg-black/10">
+                    <X size={15}/>
                 </div>
             </div>
         </div>

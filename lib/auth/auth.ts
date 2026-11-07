@@ -22,6 +22,11 @@ export const auth = betterAuth({
         type: "string",
         required: true,
       },
+      hasVisitedDashboard: {
+        type: "boolean",
+        required: false,
+        defaultValue: false,
+      },
     },
   },
 });

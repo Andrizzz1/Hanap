@@ -13,16 +13,23 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { useSession } from "@/lib/auth/auth.client";
 import { signOut } from "@/lib/auth/auth.client";
-import { Avatar } from "./ui/avatar";
-import { AvatarFallback } from "./ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage  } from "./ui/avatar";
 import ChangeProfile from "./ChangeProfile-Popup";
 import { useState } from "react";
 import { Mascot } from "page-mascot";
+import { mascots } from "./MascotWidget";
 
 export default function Navbar() {
     const {data: session}=useSession()
     const [changeProfile,setChangeProfile] = useState(false)
     const router = useRouter()
+
+    const profileImage = session?.user.image;
+    console.log(profileImage)
+    const isMascot = mascots.some(
+      (mascot) => mascot.name === profileImage
+    );
+
     return (
       <>
         <div className="px-20 flex items-center justify-between">
@@ -36,17 +43,29 @@ export default function Navbar() {
                     <DropdownMenuTrigger>
                         <Button variant="ghost">
                             <Avatar>
-                              {session.user.image?<AvatarFallback>
+                              {isMascot && profileImage ?
+                             ( <AvatarFallback>
+                          
                                 <Mascot
                                   directions={`/mascots/${session.user.image}-directions.webp`}
                                   reactions={`/mascots/${session.user.image}-reactions.webp`}
                                   size={30}
-                                  label={session.user.image}
+                                  label={profileImage}
                                 />
-                              </AvatarFallback>:
+                              </AvatarFallback>
+                              ):(
+                                <>
+                                {profileImage &&(
+                                  <AvatarImage
+                                    src={profileImage}
+                                    alt="Profile picture"
+                                  />
+                                )}
                                 <AvatarFallback className="bg-black text-white">
                                     {session.user.fname[0].toUpperCase()}
                                 </AvatarFallback>
+                                
+                                </>)
                 
                               }
                             </Avatar>

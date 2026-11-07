@@ -4,7 +4,7 @@
 import { Mascot } from "page-mascot";
 import {authClient, useSession } from "@/lib/auth/auth.client";
 
-const mascots=[
+export const mascots=[
   {name:'fox'},
   {name:'glasses'},
   {name:'cap'},
@@ -16,7 +16,7 @@ const mascots=[
 export default function MascotWidget() {
   const {data: session}=useSession()
   
-    async function handleChangeProfile(mascotName: string){
+  async function handleChangeProfile(mascotName: string){
     if (!session) return;
 
       try{

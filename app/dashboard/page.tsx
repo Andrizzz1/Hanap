@@ -2,9 +2,12 @@ import { getSession } from "@/lib/auth/auth";
 import { redirect } from "next/navigation";
 import MarkDashboardVisited from "@/components/MarkDashboardVisited";
 import { Card, CardHeader,CardTitle, CardContent } from "@/components/ui/card";
-import { Award, Calendar, CheckCircle2 ,Mic, XCircle ,MoreVertical, Trash2} from "lucide-react";
+import { Award, Calendar, CheckCircle2 ,Mic, XCircle ,MoreVertical, Trash2, Plus} from "lucide-react";
 import { DropdownMenu ,DropdownMenuTrigger, DropdownMenuContent,DropdownMenuItem} from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
+import { Dialog , DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription,DialogFooter} from "@/components/ui/dialog";
+import { Label } from "@/components/ui/label"
+import { Input } from "@/components/ui/input"
 
 const COLUMN_CONFIG: Array<{color: string; icon: React.ReactNode; name:string}> =[
   {
@@ -65,7 +68,6 @@ export default async function Dashboard() {
                           {column.icon}
                           <CardTitle>{column.name}</CardTitle>
                         </div>
-
                         <DropdownMenu>
                           <DropdownMenuTrigger>
                             <Button variant="ghost">
@@ -79,8 +81,58 @@ export default async function Dashboard() {
                         </DropdownMenu>
                     </div>
                   </CardHeader>
+                           
 
-                  <CardContent className="min-h-100"></CardContent>
+                  <CardContent className="min-h-100">
+                    <Dialog>
+                      <DialogTrigger>
+                        <Button variant="outline" > <Plus /> Add Job</Button>
+                      </DialogTrigger>
+
+                      <DialogContent>
+                        <DialogHeader>
+                          <DialogTitle>Add Job Application</DialogTitle>
+                          <DialogDescription>Track a new job application</DialogDescription>
+                        </DialogHeader>
+                        <form action="">
+                          <div className="flex gap-3">
+                            <div>
+                              <Label htmlFor="company">Company *</Label>
+                              <Input id="company" required></Input>
+                            </div>
+                            <div>
+                              <Label htmlFor="position">Position *</Label>
+                              <Input id="position" required></Input>
+                            </div>
+                          </div>
+                          <div className="flex gap-3 my-3">
+                            <div>
+                              <Label htmlFor="location">Location</Label>
+                              <Input id="locaion"></Input>
+                            </div>
+                            <div>
+                              <Label htmlFor="salary">Salary</Label>
+                              <Input id="salary"></Input>
+                            </div>
+                          </div>
+                          <Label htmlFor="job">Job URL</Label>
+                          <Input id="job"></Input>
+                          <Label htmlFor="tag" className="mt-3">Tags</Label>
+                          <Input id="tag"></Input>
+                          <Label htmlFor="Description" className="mt-3">Description</Label>
+                          <Input id="Description"></Input>
+                          <Label htmlFor="notes" className="mt-3">Notes</Label>
+                          <Input id="notes"></Input>
+
+                          <DialogFooter>
+                            <Button>Cancel</Button>
+                            <Button>Add Application</Button>
+                          </DialogFooter>
+                        </form>
+
+                      </DialogContent>
+                    </Dialog>
+                  </CardContent>
             </Card>       
 
         ))}             
